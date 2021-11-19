@@ -1,0 +1,15 @@
+{
+    "id": "{39B7AB30-2E15-860F-7E1A-52C9B555B913}",
+    "name": "VirtuellerZaehler",
+    "type": 3,
+    "vendor": "",
+    "aliases":
+    [
+        "Virtueller Zähler"
+    ],
+    "url": "https://www.symcon.de",
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "VZ"
+}
