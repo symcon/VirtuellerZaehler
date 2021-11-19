@@ -1,14 +1,12 @@
 {
-    "elements":
-    [
+    "elements": [
         {
             "type": "NumberSpinner",
             "caption": "Max limit",
             "name": "max"
         }
     ],
-    "actions":
-    [
+    "actions": [
         {
             "type": "Button",
             "name": "logging",
@@ -16,7 +14,5 @@
             "onClick": "VZ_activateLogging($id);"
         }
     ],
-    "status":
-    [
-    ]
+    "status": []
 }
