@@ -1,0 +1,10 @@
+{
+    "translations": {
+        "de": {
+            "Max limit": "Grenzwert",
+            "Activate Logging": "Logging aktivieren",
+            "Currend counter": "Aktueller Zählerstand",
+            "New counter": "Neuer Zählerstand"
+        }
+    }
+}
