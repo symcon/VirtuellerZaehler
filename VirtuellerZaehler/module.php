@@ -9,12 +9,12 @@
             $this->RegisterPropertyFloat("max", 0.0);
 
             //Register Variable
-            $this->RegisterVariableFloat("Counter", "Counter");       
-            $this->RegisterVariableString("newCounter","new Counter");
+            $this->RegisterVariableFloat("currendCounter", $this->Translate("Currend counter"));       
+            $this->RegisterVariableString("newCounter",$this->Translate("New counter"));
             $this->EnableAction("newCounter");
 
             //Register Script
-            $this->RegisterScript("clickForValidat", "Click for Validation", "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_isValid(\$id);" );
+            $this->RegisterScript("clickForValidat", $this->Translate("Click for Validation"), "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_isValid(\$id);" );
 
         }
  
@@ -23,7 +23,7 @@
             parent::ApplyChanges();
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0]; 
 
-            if(!AC_GetLoggingStatus($archiveID,  $this->GetIDForIdent("Counter")))
+            if(!AC_GetLoggingStatus($archiveID,  $this->GetIDForIdent("currendCounter")))
             {  
                 $this->UpdateFormField("logging", "visible", true);
             }
@@ -43,9 +43,9 @@
  
         //Check if the new Value is valid
         public function isValid() {
-            $currentCounter = $this->GetValue("Counter");
+            $currentCounter = $this->GetValue("currendCounter");
             echo $currentCounter."\n";
-            $number = stR_replace(",", ".", $this->GetValue("newCounter"));
+            $number = str_replace(",", ".", $this->GetValue("newCounter"));
             $newCounter = floatval($number);
             echo $newCounter."\n";
             
@@ -65,7 +65,7 @@
             }
 
             $currentCounter = $newCounter;
-            $this->SetValue("Counter", $currentCounter);
+            $this->SetValue("currendCounter", $currentCounter);
             $this->SetValue("newCounter", "");
         }
 
@@ -73,7 +73,7 @@
         public function activateLogging()
         {
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
-            AC_SetLoggingStatus($archiveID, $this->GetIDForIdent("Counter"), true);
+            AC_SetLoggingStatus($archiveID, $this->GetIDForIdent("currendCounter"), true);
             echo "OK";
             $this->UpdateFormField("logging", "visible", false);
         }
