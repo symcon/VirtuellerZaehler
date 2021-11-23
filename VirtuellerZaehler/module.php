@@ -12,12 +12,12 @@ class VirtuellerZaehler extends IPSModule
             $this->RegisterPropertyFloat('max', 0.0);
 
             //Register Variable
-            $this->RegisterVariableFloat('currendCounter', $this->Translate('Currend counter'));
+            $this->RegisterVariableFloat('currentCounter', $this->Translate('Current counter'));
             $this->RegisterVariableString('newCounter', $this->Translate('New counter'));
             $this->EnableAction('newCounter');
 
             //Register Script
-            $this->RegisterScript('clickForValidat', $this->Translate('Click for Validation'), "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_isValid(\$id);");
+            $this->RegisterScript('setNewCounter', $this->Translate('Set counter'), "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_writeNewCounterValue(\$id);");
         }
 
         public function ApplyChanges()
@@ -26,7 +26,7 @@ class VirtuellerZaehler extends IPSModule
             parent::ApplyChanges();
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
-            if (!AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('currendCounter'))) {
+            if (!AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('currentCounter'))) {
                 $this->UpdateFormField('logging', 'visible', true);
             } else {
                 $this->UpdateFormField('logging', 'visible', false);
@@ -43,31 +43,29 @@ class VirtuellerZaehler extends IPSModule
         }
 
         //Check if the new Value is valid
-        public function isValid()
+        public function writeNewCounterValue()
         {
-            $currentCounter = $this->GetValue('currendCounter');
-            echo $currentCounter . "\n";
+            $currentCounter = $this->GetValue('currentCounter');
             $number = str_replace(',', '.', $this->GetValue('newCounter'));
             $newCounter = floatval($number);
-            echo $newCounter . "\n";
 
             if ($newCounter < 0) {
-                echo 'The number is negativ';
+                echo $this->Translate('The value is negativ');
                 return;
             }
             if ($newCounter < $currentCounter) {
-                echo 'The number is too low';
+                echo $this->Translate('The value is too low');
                 return;
             }
             if ($this->ReadPropertyFloat('max') != 0) {
                 if ($newCounter > ($currentCounter + $this->ReadPropertyFloat('max'))) {
-                    echo 'The number is too high';
+                    echo $this->Translate('The value is too high');
                     return;
                 }
             }
 
             $currentCounter = $newCounter;
-            $this->SetValue('currendCounter', $currentCounter);
+            $this->SetValue('currentCounter', $currentCounter);
             $this->SetValue('newCounter', '');
         }
 
@@ -75,7 +73,7 @@ class VirtuellerZaehler extends IPSModule
         public function activateLogging()
         {
             $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
-            AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('currendCounter'), true);
+            AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('currentCounter'), true);
             echo 'OK';
             $this->UpdateFormField('logging', 'visible', false);
         }
