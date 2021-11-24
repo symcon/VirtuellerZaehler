@@ -38,7 +38,7 @@ class VirtuellerZaehler extends IPSModule
             $this->RegisterScript('setNewCounter', $this->Translate('Set counter'), "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_writeNewCounterValue(\$id);");
         } else {
             //Unregister Script
-            if ($this->GetIDForIdent('setNewCounter') != 0){
+            if ($this->GetIDForIdent('setNewCounter') != 0) {
                 IPS_DeleteScript($this->GetIDForIdent('setNewCounter'), true);
             }
         }

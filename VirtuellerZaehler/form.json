@@ -6,7 +6,7 @@
             "name": "max"
         },
         {
-            "type":"CheckBox",
+            "type": "CheckBox",
             "caption": "Accept value with confirmation",
             "name": "toggleScript"
         }
