@@ -3,8 +3,11 @@
         "de": {
             "Max limit": "Grenzwert",
             "Activate Logging": "Logging aktivieren",
-            "Currend counter": "Aktueller Zählerstand",
-            "New counter": "Neuer Zählerstand"
+            "Current counter": "Aktueller Zählerstand",
+            "New counter": "Neuer Zählerstand",
+            "The value is negativ" : "Die Wert ist negativ",
+            "The value is too low" : "Die Wert ist zu klein",
+            "The value is too high" : "Die Wert ist zu hoch"
         }
     }
 }
