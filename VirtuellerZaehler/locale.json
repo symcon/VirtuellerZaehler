@@ -8,7 +8,8 @@
             "Set counter": "Zählerstand eintragen",
             "The value is negativ" : "Die Wert ist negativ",
             "The value is too low" : "Die Wert ist zu klein",
-            "The value is too high" : "Die Wert ist zu hoch"
+            "The value is too high" : "Die Wert ist zu hoch",
+            "Accept value with confirmation":"Erfordere Bestätigung zum Übernehmen"
         }
     }
 }

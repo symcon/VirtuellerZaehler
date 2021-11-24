@@ -4,6 +4,11 @@
             "type": "NumberSpinner",
             "caption": "Max limit",
             "name": "max"
+        },
+        {
+            "type":"CheckBox",
+            "caption": "Accept value with confirmation",
+            "name": "toggleScript"
         }
     ],
     "actions": [
