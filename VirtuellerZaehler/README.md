@@ -1,5 +1,5 @@
 # Virtueller Zähler
-Das Modul stellt eine Eingabemaske für manuell abgelesene Zählerstände bereit. Es übernimmt den manuellen Eintrag, prüft diesen auf Plausibilität und übergibt den Wert an eine Zählervariable, nachdem ein Script zur Bestätigung ausgeführt wird.  
+Das Modul stellt eine Eingabemaske für manuell abgelesene Zählerstände bereit. Es übernimmt den manuellen Eintrag, prüft diesen auf Plausibilität und übergibt den Wert an eine Zählervariable.
 Um auf Plausibilität zu prüfen kann ein Grenzwert eingestellt werden. 
 
 ### Inhaltsverzeichnis
@@ -33,20 +33,28 @@ Um auf Plausibilität zu prüfen kann ein Grenzwert eingestellt werden.
 
 __Konfigurationsseite__:
 
-Name                | Beschreibung
-------------------- | ---------------------------------
-Grenzwert           | Zahl, um die ein neuer Zählerwert maximal steigen darf
-Logging Aktivieren  | Button, welcher das Logging der Zählervariable aktiviert. Er wird ausgeblendet, wenn das Logging aktiviert ist.
+Name                                 | Beschreibung
+------------------------------------ | ---------------------------------
+Grenzwert                            | Zahl, um die ein neuer Zählerwert maximal steigen darf. Ist der Grenzwert 0 wird nicht auf diesen überprüft
+Erfordere Bestätigung zum Übernehmen | Wenn Aktiviert, muss ein Script ausgeführt werden um die Plausibilitätsprüfung anzustoßen
+Logging Aktivieren                   | Button, welcher das Logging der Zählervariable aktiviert. Er wird ausgeblendet, wenn das Logging aktiviert ist.
 
-### 5. Statusvariablen
+### 5. Statusvariablen und Profile
 Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
 
 #### Statusvariablen
 
-Name                  | Typ    | Beschreibung
---------------------- | ------ | -------------
-Aktueller Zählerstand | Float  | Zeigt den zuletzt eingetragenen Zählerstand an
-Neuer Zählerstand     | String | Eingabevariable für neuen Zählerstand
+Name                                                                | Typ     | Beschreibung
+------------------------------------------------------------------- | ------- | -------------
+Aktueller Zählerstand                                               | Float   | Zeigt den zuletzt eingetragenen Zählerstand an
+Neuer Zählerstand                                                   | String  | Eingabevariable für neuen Zählerstand
+Sicher neuen Zählerstand zu setzen: Eingabe des neuen Zählerstandes | Boolean | Erscheint, wenn der neue Zählerstand den Aktuellen um den Grenzwert überschreitet. Der Wert kann mit der Bestätigung trotzdem übernommen werden
+
+#### Profile
+
+Name       | Typ
+---------- | ----
+VZ.Confirm | boolean
 
 #### Skripte
 Bezeichnung           | Beschreibung 

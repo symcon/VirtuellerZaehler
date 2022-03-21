@@ -6,10 +6,13 @@
             "Current counter": "Aktueller Zählerstand",
             "New counter": "Neuer Zählerstand",
             "Set counter": "Zählerstand eintragen",
-            "The value is negativ": "Die Wert ist negativ",
-            "The value is too low": "Die Wert ist zu klein",
-            "The value is too high": "Die Wert ist zu hoch",
-            "Accept value with confirmation": "Erfordere Bestätigung zum Übernehmen"
+            "The value is negativ": "Der Wert ist negativ",
+            "The value is too low": "Der Wert ist zu klein",
+            "The value is too high": "Der Wert ist zu hoch",
+            "Sure to set counter" : "Sicher neuen Zählerstand zu setzen",
+            "Accept value with confirmation": "Erfordere Bestätigung zum Übernehmen",
+            "Confirm": "Bestätigen",
+            "Denied": "Abbrechen"
         }
     }
 }

@@ -3,20 +3,21 @@
         {
             "type": "NumberSpinner",
             "caption": "Max limit",
-            "name": "max"
+            "name": "Max"
         },
         {
             "type": "CheckBox",
             "caption": "Accept value with confirmation",
-            "name": "toggleScript"
+            "name": "ToggleScript"
         }
     ],
     "actions": [
         {
             "type": "Button",
-            "name": "logging",
+            "name": "Logging",
             "caption": "Activate Logging",
-            "onClick": "VZ_activateLogging($id);"
+            "onClick": "VZ_activateLogging($id);",
+            "visible": "true"
         }
     ],
     "status": []
