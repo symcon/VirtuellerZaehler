@@ -17,10 +17,10 @@ class VirtuellerZaehler extends IPSModule
         $this->RegisterVariableString('NewCounter', $this->Translate('New counter'));
         $this->EnableAction('NewCounter');
 
-        if(!IPS_VariableProfileExists('VZ.Confirm')){
+        if (!IPS_VariableProfileExists('VZ.Confirm')) {
             IPS_CreateVariableProfile('VZ.Confirm', 0);
-            IPS_SetVariableProfileAssociation('VZ.Confirm', true, $this->Translate('Confirm'),'Ok', '0x00FF00');
-            IPS_SetVariableProfileAssociation('VZ.Confirm', false, $this->Translate('Denied'),'Cross', '0xFF0000');
+            IPS_SetVariableProfileAssociation('VZ.Confirm', true, $this->Translate('Confirm'), 'Ok', '0x00FF00');
+            IPS_SetVariableProfileAssociation('VZ.Confirm', false, $this->Translate('Denied'), 'Cross', '0xFF0000');
         }
 
         $this->RegisterMessage($this->GetIDForIdent('NewCounter'), VM_UPDATE);
@@ -70,7 +70,7 @@ class VirtuellerZaehler extends IPSModule
                             $this->SetValue('NewCounter', '');
                             $this->UnregisterVariable('Request');
                         } else {
-                            if($this->GetValue('NewCounter') !=''){
+                            if ($this->GetValue('NewCounter') != '') {
                                 $this->UnregisterVariable('Request');
                             }
                         }
@@ -81,16 +81,15 @@ class VirtuellerZaehler extends IPSModule
     public function GetConfigurationForm()
     {
         $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
-        if(AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'))){
+        if (AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'))) {
             $visible = false;
-        }
-        else {
+        } else {
             $visible = true;
         }
 
-        $data = json_decode(file_get_contents(__DIR__ . "/form.json"));
-		$data->actions[0]->visible = $visible;
-		return json_encode($data);
+        $data = json_decode(file_get_contents(__DIR__ . '/form.json'));
+        $data->actions[0]->visible = $visible;
+        return json_encode($data);
     }
 
     //Check if the new Value is valid
@@ -113,7 +112,7 @@ class VirtuellerZaehler extends IPSModule
                 echo $this->Translate('The value is too high');
 
                 //Request if sure
-                $this->RegisterVariableBoolean('Request', $this->Translate('Sure to set counter'). ": " . $newCounter, 'VZ.Confirm');
+                $this->RegisterVariableBoolean('Request', $this->Translate('Sure to set counter') . ': ' . $newCounter, 'VZ.Confirm');
                 $this->EnableAction('Request');
                 return;
             }
