@@ -9,13 +9,8 @@ class VirtuellerZaehler extends IPSModule
         parent::Create();
 
         //Register Properties
-        $this->RegisterPropertyFloat('Max', 0.0);
+        $this->RegisterPropertyFloat('Max', 0.);
         $this->RegisterPropertyBoolean('ToggleScript', false);
-
-        //Register Variable
-        $this->RegisterVariableFloat('CurrentCounter', $this->Translate('Current counter'));
-        $this->RegisterVariableString('NewCounter', $this->Translate('New counter'));
-        $this->EnableAction('NewCounter');
 
         if (!IPS_VariableProfileExists('VZ.Confirm')) {
             IPS_CreateVariableProfile('VZ.Confirm', 0);
@@ -23,6 +18,15 @@ class VirtuellerZaehler extends IPSModule
             IPS_SetVariableProfileAssociation('VZ.Confirm', false, $this->Translate('Denied'), 'Cross', '0xFF0000');
         }
 
+        if (!IPS_VariableProfileExists('VZ.newCounter')) {
+            IPS_CreateVariableProfile('VZ.newCounter', 3);
+            IPS_SetVariableProfileIcon('VZ.newCounter', 'HollowDoubleArrowUp');
+        }
+
+        //Register Variable
+        $this->RegisterVariableFloat('CurrentCounter', $this->Translate('Current counter'));
+        $this->RegisterVariableString('NewCounter', $this->Translate('New counter'), 'VZ.newCounter');
+        $this->EnableAction('NewCounter');
         $this->RegisterMessage($this->GetIDForIdent('NewCounter'), VM_UPDATE);
     }
 
@@ -81,13 +85,23 @@ class VirtuellerZaehler extends IPSModule
     public function GetConfigurationForm()
     {
         $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
+        //Button Visibil
         if (AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'))) {
             $visible = false;
         } else {
             $visible = true;
         }
 
+        //Digits
+        $variable = IPS_GetVariable($this->GetIDForIdent('CurrentCounter'));
+        if ($variable != null && $variable['VariableCustomProfile'] != '') {
+            $digits = IPS_GetVariableProfile($variable['VariableCustomProfile'])['Digits'];
+        } else {
+            $digits = 1;
+        }
+
         $data = json_decode(file_get_contents(__DIR__ . '/form.json'));
+        $data->elements[0]->digits = $digits;
         $data->actions[0]->visible = $visible;
         return json_encode($data);
     }
@@ -128,6 +142,7 @@ class VirtuellerZaehler extends IPSModule
     {
         $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
         AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'), true);
+        AC_SetAggregationType($archiveID, $this->GetIDForIdent('CurrentCounter'), 1);
         echo  $this->Translate('Das Logging wurde aktiviert');
         $this->UpdateFormField('Logging', 'visible', false);
     }
