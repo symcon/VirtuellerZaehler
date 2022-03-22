@@ -28,7 +28,7 @@ Um auf Plausibilität zu prüfen kann ein Grenzwert eingestellt werden.
 
 ### 4. Einrichten der Instanzen in IP-Symcon 
 
-- Unter "Instanz hinzufügen" kann das 'WasserAlarm'-Modul mithilfe des Schnellfilters gefunden werden.
+- Unter "Instanz hinzufügen" kann das 'Virtueller Zähler'-Modul mithilfe des Schnellfilters gefunden werden.
     - Weitere Informationen zum Hinzufügen von Instanzen in der [Dokumentation der Instanzen](https://www.symcon.de/service/dokumentation/konzepte/instanzen/#Instanz_hinzufügen)
 
 __Konfigurationsseite__:
@@ -54,7 +54,7 @@ Sicher neuen Zählerstand zu setzen: Eingabe des neuen Zählerstandes | Boolean 
 
 Name                 | Typ
 -------------------- | ----
-VZ.Confirm           | boolean
+VZ.Confirm           | Boolean
 VZ.NewCounterReading | String
 
 #### Skripte
@@ -67,8 +67,8 @@ Zählerstand setzen    | Führt die Überprüfung auf Plausibilität aus und sch
 Über das WebFront kann der neue Zählerstand eingegeben werden und das Skript ausgeführt werden, zudem wird der zuletzt übernommene Zählerstand angezeigt. 
 
 ### 7. PHP-Befehlsreferenzen
-`void VZ_writeNewCounterValue(integer $instanzID);`
+`void VZ_WriteNewCounterValue(integer $instanzID);`
 Überprüft ob der Wert in Variable "Neuer Zählerstand" negativ ist, der "Neue Zählerstand" kleiner dem "Aktuellen Zählerstand" oder der "Neue Zählerstand" den "Aktuellen Zählerstand" mit dem "Grenzwert" übersteigt. Wenn diese nicht zutreffen  wird der neue Wert in "Aktuellen Zählerstand gesetzt. 
 
-`void VZ_activateLogging(integer $inszanzID);`
+`void VZ_ActivateLogging(integer $inszanzID);`
 Aktiviert das Logging der Variable "Aktueller Zählerstand" und setzt die Anzeige des Buttons "Logging Aktivieren" auf False. 

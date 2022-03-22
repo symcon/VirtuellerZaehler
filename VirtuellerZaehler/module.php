@@ -25,7 +25,7 @@ class VirtuellerZaehler extends IPSModule
 
         //Register Variable
         $this->RegisterVariableFloat('CurrentCounterReading', $this->Translate('Current counter reading'));
-        $this->RegisterVariableString('NewCounterReading', $this->Translate('New counter reading'), 'VZ.newCounter');
+        $this->RegisterVariableString('NewCounterReading', $this->Translate('New counter reading'), 'VZ.NewCounter');
         $this->EnableAction('NewCounterReading');
     }
 
@@ -54,15 +54,16 @@ class VirtuellerZaehler extends IPSModule
                 if (!$this->ReadPropertyBoolean('ConfirmationScript')) {
                     $this->WriteNewCounterValue();
                 }
+                break;
             }
-            break;
             case 'Request':
             {
                 if ($Value) {
                     $this->SetValue('CurrentCounterReading', $this->GetValue('NewCounterReading'));
-                    $this->SetValue('NewCounterReading', '');
                 }
+                $this->SetValue('NewCounterReading', '');
                 $this->UnregisterVariable('Request');
+                break;
             }
         }
     }
@@ -121,7 +122,7 @@ class VirtuellerZaehler extends IPSModule
         $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
         AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounterReading'), true);
         AC_SetAggregationType($archiveID, $this->GetIDForIdent('CurrentCounterReading'), 1);
-        echo  $this->Translate('The logging was activate');
+        echo $this->Translate('The logging was activate');
         $this->UpdateFormField('Logging', 'visible', false);
     }
 }
