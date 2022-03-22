@@ -52,9 +52,10 @@ Sicher neuen Zählerstand zu setzen: Eingabe des neuen Zählerstandes | Boolean 
 
 #### Profile
 
-Name       | Typ
----------- | ----
-VZ.Confirm | boolean
+Name                 | Typ
+-------------------- | ----
+VZ.Confirm           | boolean
+VZ.NewCounterReading | String
 
 #### Skripte
 Bezeichnung           | Beschreibung 

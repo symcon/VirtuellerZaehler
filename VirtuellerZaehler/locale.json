@@ -1,18 +1,19 @@
 {
     "translations": {
         "de": {
-            "Max limit": "Grenzwert",
+            "Maximum difference": "Maximale Differenz",
             "Activate Logging": "Logging aktivieren",
-            "Current counter": "Aktueller Zählerstand",
-            "New counter": "Neuer Zählerstand",
-            "Set counter": "Zählerstand eintragen",
-            "The value is negativ": "Der Wert ist negativ",
+            "Current counter reading": "Aktueller Zählerstand",
+            "New counter reading": "Neuer Zählerstand",
+            "Set counter reading": "Zählerstand eintragen",
+            "The value is negative": "Der Wert ist negativ",
             "The value is too low": "Der Wert ist zu klein",
             "The value is too high": "Der Wert ist zu hoch",
             "Sure to set counter": "Sicher neuen Zählerstand zu setzen",
             "Accept value with confirmation": "Erfordere Bestätigung zum Übernehmen",
             "Confirm": "Bestätigen",
-            "Denied": "Abbrechen"
+            "Cancel": "Abbrechen",
+            "The logging was activate":"Das Logging wurde aktiviert" 
         }
     }
 }

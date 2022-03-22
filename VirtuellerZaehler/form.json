@@ -2,13 +2,13 @@
     "elements": [
         {
             "type": "NumberSpinner",
-            "caption": "Max limit",
-            "name": "Max"
+            "caption": "Maximum difference",
+            "name": "MaxDifference"
         },
         {
             "type": "CheckBox",
             "caption": "Accept value with confirmation",
-            "name": "ToggleScript"
+            "name": "ConfirmationScript"
         }
     ],
     "actions": [
@@ -16,7 +16,7 @@
             "type": "Button",
             "name": "Logging",
             "caption": "Activate Logging",
-            "onClick": "VZ_activateLogging($id);",
+            "onClick": "VZ_ActivateLogging($id);",
             "visible": "true"
         }
     ],

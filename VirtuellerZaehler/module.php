@@ -9,120 +9,96 @@ class VirtuellerZaehler extends IPSModule
         parent::Create();
 
         //Register Properties
-        $this->RegisterPropertyFloat('Max', 0.);
-        $this->RegisterPropertyBoolean('ToggleScript', false);
+        $this->RegisterPropertyFloat('MaxDifference', 0);
+        $this->RegisterPropertyBoolean('ConfirmationScript', false);
 
         if (!IPS_VariableProfileExists('VZ.Confirm')) {
             IPS_CreateVariableProfile('VZ.Confirm', 0);
             IPS_SetVariableProfileAssociation('VZ.Confirm', true, $this->Translate('Confirm'), 'Ok', '0x00FF00');
-            IPS_SetVariableProfileAssociation('VZ.Confirm', false, $this->Translate('Denied'), 'Cross', '0xFF0000');
+            IPS_SetVariableProfileAssociation('VZ.Confirm', false, $this->Translate('Cancel'), 'Cross', '0xFF0000');
         }
 
-        if (!IPS_VariableProfileExists('VZ.newCounter')) {
-            IPS_CreateVariableProfile('VZ.newCounter', 3);
-            IPS_SetVariableProfileIcon('VZ.newCounter', 'HollowDoubleArrowUp');
+        if (!IPS_VariableProfileExists('VZ.NewCounter')) {
+            IPS_CreateVariableProfile('VZ.NewCounter', 3);
+            IPS_SetVariableProfileIcon('VZ.NewCounter', 'HollowDoubleArrowUp');
         }
 
         //Register Variable
-        $this->RegisterVariableFloat('CurrentCounter', $this->Translate('Current counter'));
-        $this->RegisterVariableString('NewCounter', $this->Translate('New counter'), 'VZ.newCounter');
-        $this->EnableAction('NewCounter');
-        $this->RegisterMessage($this->GetIDForIdent('NewCounter'), VM_UPDATE);
+        $this->RegisterVariableFloat('CurrentCounterReading', $this->Translate('Current counter reading'));
+        $this->RegisterVariableString('NewCounterReading', $this->Translate('New counter reading'), 'VZ.newCounter');
+        $this->EnableAction('NewCounterReading');
     }
 
     public function ApplyChanges()
     {
         // Do not delete this line
         parent::ApplyChanges();
-        $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
 
-        if ($this->ReadPropertyBoolean('ToggleScript')) {
-            $this->UnregisterMessage($this->GetIDForIdent('NewCounter'), VM_UPDATE);
+        if ($this->ReadPropertyBoolean('ConfirmationScript')) {
             //Register Script
-            $this->RegisterScript('SetNewCounter', $this->Translate('Set counter'), "<?php\n\$id=IPS_GetParent(\$_IPS['SELF']);\nVZ_writeNewCounterValue(\$id);");
+            $this->RegisterScript('SetNewCounterReading', $this->Translate('Set counter reading'), "<?php\nVZ_WriteNewCounterValue(IPS_GetParent(\$_IPS['SELF']));");
         } else {
             //Unregister Script
-            if (@$this->GetIDForIdent('SetNewCounter') != 0) {
-                IPS_DeleteScript($this->GetIDForIdent('SetNewCounter'), true);
+            if (@$this->GetIDForIdent('SetNewCounterReading') != 0) {
+                IPS_DeleteScript($this->GetIDForIdent('SetNewCounterReading'), true);
             }
-        }
-    }
-
-    public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
-    {
-        if ($Message == VM_UPDATE) {
-            //$this->writeNewCounterValue($this->GetValue('NewCounter'));
         }
     }
 
     public function RequestAction($Ident, $Value)
     {
         switch ($Ident) {
-                case 'NewCounter':
-                    {
-                        $this->SetValue($Ident, $Value);
-                        if (!$this->ReadPropertyBoolean('ToggleScript')) {
-                            $this->writeNewCounterValue();
-                        }
-                    }
-                    break;
-                case 'Request':
-                    {
-                        if ($Value) {
-                            $number = $this->GetValue('NewCounter');
-                            $this->SetValue('CurrentCounter', $number);
-                            $this->SetValue('NewCounter', '');
-                            $this->UnregisterVariable('Request');
-                        } else {
-                            if ($this->GetValue('NewCounter') != '') {
-                                $this->UnregisterVariable('Request');
-                            }
-                        }
-                    }
+            case 'NewCounterReading':
+            {
+                $this->SetValue($Ident, $Value);
+                if (!$this->ReadPropertyBoolean('ConfirmationScript')) {
+                    $this->WriteNewCounterValue();
+                }
             }
+            break;
+            case 'Request':
+            {
+                if ($Value) {
+                    $this->SetValue('CurrentCounterReading', $this->GetValue('NewCounterReading'));
+                    $this->SetValue('NewCounterReading', '');
+                }
+                $this->UnregisterVariable('Request');
+            }
+        }
     }
 
     public function GetConfigurationForm()
     {
-        $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
-        //Button Visibil
-        if (AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'))) {
-            $visible = false;
-        } else {
-            $visible = true;
-        }
-
-        //Digits
-        $variable = IPS_GetVariable($this->GetIDForIdent('CurrentCounter'));
-        if ($variable != null && $variable['VariableCustomProfile'] != '') {
-            $digits = IPS_GetVariableProfile($variable['VariableCustomProfile'])['Digits'];
-        } else {
-            $digits = 1;
-        }
-
         $data = json_decode(file_get_contents(__DIR__ . '/form.json'));
-        $data->elements[0]->digits = $digits;
-        $data->actions[0]->visible = $visible;
+        //Digits
+        $variable = IPS_GetVariable($this->GetIDForIdent('CurrentCounterReading'));
+        if ($variable['VariableCustomProfile'] != '') {
+            $data->elements[0]->digits = IPS_GetVariableProfile($variable['VariableCustomProfile'])['Digits'];
+        } else {
+            $data->elements[0]->digits = 1;
+        }
+
+        $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
+        $data->actions[0]->visible = !AC_GetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounterReading'));
         return json_encode($data);
     }
 
     //Check if the new Value is valid
-    public function writeNewCounterValue()
+    public function WriteNewCounterValue()
     {
-        $currentCounter = $this->GetValue('CurrentCounter');
-        $number = str_replace(',', '.', $this->GetValue('NewCounter'));
-        $newCounter = floatval($number);
+        $currentCounter = $this->GetValue('CurrentCounterReading');
+        $newCounter = floatval(str_replace(',', '.', $this->GetValue('NewCounterReading')));
 
         if ($newCounter < 0) {
-            echo $this->Translate('The value is negativ');
+            echo $this->Translate('The value is negative');
             return;
         } elseif ($newCounter < $currentCounter) {
             echo $this->Translate('The value is too low');
             return;
         }
 
-        if ($this->ReadPropertyFloat('Max') != 0) {
-            if ($newCounter > ($currentCounter + $this->ReadPropertyFloat('Max'))) {
+        if ($this->ReadPropertyFloat('MaxDifference') != 0) {
+            if ($newCounter > ($currentCounter + $this->ReadPropertyFloat('MaxDifference'))) {
                 echo $this->Translate('The value is too high');
 
                 //Request if sure
@@ -132,18 +108,20 @@ class VirtuellerZaehler extends IPSModule
             }
         }
 
-        $currentCounter = $newCounter;
-        $this->SetValue('CurrentCounter', $currentCounter);
-        $this->SetValue('NewCounter', '');
+        $this->SetValue('CurrentCounterReading', $newCounter);
+        $this->SetValue('NewCounterReading', '');
+        if (@$this->GetIDForIdent('Request')) {
+            $this->UnregisterVariable('Request');
+        }
     }
 
     //Activate logging
-    public function activateLogging()
+    public function ActivateLogging()
     {
         $archiveID = IPS_GetInstanceListByModuleID('{43192F0B-135B-4CE7-A0A7-1475603F3060}')[0];
-        AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounter'), true);
-        AC_SetAggregationType($archiveID, $this->GetIDForIdent('CurrentCounter'), 1);
-        echo  $this->Translate('Das Logging wurde aktiviert');
+        AC_SetLoggingStatus($archiveID, $this->GetIDForIdent('CurrentCounterReading'), true);
+        AC_SetAggregationType($archiveID, $this->GetIDForIdent('CurrentCounterReading'), 1);
+        echo  $this->Translate('The logging was activate');
         $this->UpdateFormField('Logging', 'visible', false);
     }
 }
