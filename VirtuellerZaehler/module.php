@@ -91,7 +91,7 @@ class VirtuellerZaehler extends IPSModule
         $currentCounter = $this->GetValue('CurrentCounterReading');
 
         $newCounter = str_replace(',', '.', $this->GetValue('NewCounterReading'));
-        if(!is_numeric($newCounter)){
+        if (!is_numeric($newCounter)) {
             echo $this->Translate('The value is not a number');
             return;
         }
