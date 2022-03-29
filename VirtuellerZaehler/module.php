@@ -25,6 +25,7 @@ class VirtuellerZaehler extends IPSModule
 
         //Register Variable
         $this->RegisterVariableFloat('CurrentCounterReading', $this->Translate('Current counter reading'));
+        //NewCounterReading is of type String, because of a bug in the Webfront (Float with action without a profile cannot be changed properly)
         $this->RegisterVariableString('NewCounterReading', $this->Translate('New counter reading'), 'VZ.NewCounter');
         $this->EnableAction('NewCounterReading');
     }
@@ -88,7 +89,14 @@ class VirtuellerZaehler extends IPSModule
     public function WriteNewCounterValue()
     {
         $currentCounter = $this->GetValue('CurrentCounterReading');
-        $newCounter = floatval(str_replace(',', '.', $this->GetValue('NewCounterReading')));
+
+        $newCounter = str_replace(',', '.', $this->GetValue('NewCounterReading'));
+        if (!is_numeric($newCounter)) {
+            echo $this->Translate('The value is not a number');
+            return;
+        }
+
+        $newCounter = floatval($newCounter);
 
         if ($newCounter < 0) {
             echo $this->Translate('The value is negative');

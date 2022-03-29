@@ -13,7 +13,8 @@
             "Accept value with confirmation": "Erfordere Bestätigung zum Übernehmen",
             "Confirm": "Bestätigen",
             "Cancel": "Abbrechen",
-            "The logging was activate":"Das Logging wurde aktiviert" 
+            "The logging was activate":"Das Logging wurde aktiviert" ,
+            "The value is not a number": "Der Wert ist keine Zahl"
         }
     }
 }
