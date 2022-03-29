@@ -25,7 +25,7 @@ class VirtuellerZaehler extends IPSModule
 
         //Register Variable
         $this->RegisterVariableFloat('CurrentCounterReading', $this->Translate('Current counter reading'));
-        //NewCounterReading is String, cause of a bug in the Webfront, there float is not every time set manually
+        //NewCounterReading is of type String, because of a bug in the Webfront (Float with action without a profile cannot be changed properly)
         $this->RegisterVariableString('NewCounterReading', $this->Translate('New counter reading'), 'VZ.NewCounter');
         $this->EnableAction('NewCounterReading');
     }
