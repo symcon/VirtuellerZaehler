@@ -6,5 +6,5 @@
 
 Folgende Module beinhaltet das Virtueller Zähler Repository:
 
-- __Virtueller Zähler__ ([Dokumentation](VirtuellerZaehler))  
+- __Virtueller Zähler__ ([Dokumentation](https://www.symcon.de/de/service/dokumentation/modulreferenz/virtueller-zaehler))  
 	Eingabemaske für manuelle abgelesene Zählerstände.
