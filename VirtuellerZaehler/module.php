@@ -50,22 +50,22 @@ class VirtuellerZaehler extends IPSModule
     {
         switch ($Ident) {
             case 'NewCounterReading':
-            {
-                $this->SetValue($Ident, $Value);
-                if (!$this->ReadPropertyBoolean('ConfirmationScript')) {
-                    $this->WriteNewCounterValue();
+                {
+                    $this->SetValue($Ident, $Value);
+                    if (!$this->ReadPropertyBoolean('ConfirmationScript')) {
+                        $this->WriteNewCounterValue();
+                    }
+                    break;
                 }
-                break;
-            }
             case 'Request':
-            {
-                if ($Value) {
-                    $this->SetValue('CurrentCounterReading', $this->GetValue('NewCounterReading'));
+                {
+                    if ($Value) {
+                        $this->SetValue('CurrentCounterReading', $this->GetValue('NewCounterReading'));
+                    }
+                    $this->SetValue('NewCounterReading', '');
+                    $this->UnregisterVariable('Request');
+                    break;
                 }
-                $this->SetValue('NewCounterReading', '');
-                $this->UnregisterVariable('Request');
-                break;
-            }
         }
     }
 
