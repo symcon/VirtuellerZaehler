@@ -1,12 +1,12 @@
 {
     "id": "{39B7AB30-2E15-860F-7E1A-52C9B555B913}",
-    "name": "VirtuellerZaehler",
+    "name": "VirtualCounter",
     "type": 3,
     "vendor": "",
     "aliases": [
-        "Virtueller Zähler"
+        "Virtual Counter"
     ],
-    "url": "https://github.com/symcon/VirtuellerZaehler/VirtuellerZaehler",
+    "url": "https://www.symcon.de/en/service/documentation/module-reference/virtual-counter/",
     "parentRequirements": [],
     "childRequirements": [],
     "implemented": [],

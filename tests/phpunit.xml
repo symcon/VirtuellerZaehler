@@ -6,7 +6,7 @@
   </php>
   <source>
     <include>
-      <directory suffix=".php">../VirtuellerZaehler</directory>
+      <directory suffix=".php">../VirtualCounter</directory>
     </include>
   </source>
 </phpunit>

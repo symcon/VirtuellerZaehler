@@ -1,7 +1,7 @@
 {
     "id": "{9675096F-80A7-DEED-D8C3-15CA9C27C87F}",
     "author": "Symcon GmbH",
-    "name": "VirtuellerZaehler",
+    "name": "VirtualCounter",
     "url": "https://www.symcon.de",
     "compatibility": {
         "version": "6.0"

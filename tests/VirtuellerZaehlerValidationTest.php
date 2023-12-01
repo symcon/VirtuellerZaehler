@@ -8,8 +8,8 @@ class VirtuellerZaehlerValidationTest extends TestCaseSymconValidation
     {
         $this->validateLibrary(__DIR__ . '/..');
     }
-    public function testValidateVirtuellerZaehlerModule(): void
+    public function testValidateVirtualCounterModule(): void
     {
-        $this->validateModule(__DIR__ . '/../VirtuellerZaehler');
+        $this->validateModule(__DIR__ . '/../VirtualCounter');
     }
 }
