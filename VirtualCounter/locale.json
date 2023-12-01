@@ -14,7 +14,10 @@
             "Confirm": "Bestätigen",
             "Cancel": "Abbrechen",
             "The logging was activate": "Das Logging wurde aktiviert",
-            "The value is not a number": "Der Wert ist keine Zahl"
+            "The value is not a number": "Der Wert ist keine Zahl",
+            "Virtual Counter": "Virtueller Zähler",
+            "https://www.symcon.de/en/service/documentation/module-reference/virtual-counter/": "https://www.symcon.de/de/service/dokumentation/modulreferenz/virtueller-zaehler/",
+            "VirtualCounter": "VirtuellerZaehler"
         }
     }
 }
